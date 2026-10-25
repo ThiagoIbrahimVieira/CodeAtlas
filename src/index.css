@@ -1,0 +1,120 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Design Tokens — CodeAtlas */
+:root {
+  --bg-canvas:        #151917;
+  --bg-surface:       #202723;
+  --bg-surface-hover: #29332D;
+  --border-subtle:    #343D37;
+  --border-active:    #63D6A5;
+
+  --text-primary:   #E7EEE9;
+  --text-secondary: #AAB6AF;
+  --text-muted:     #64736A;
+
+  --mint-primary: #63D6A5;
+  --mint-subtle:  #244638;
+  --mint-glow:    rgba(99, 214, 165, 0.18);
+
+  --color-success: #75D6A0;
+  --color-warning: #E7BD72;
+  --color-error:   #F08080;
+  --color-external:#7E8D85;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  --transition-fast: 150ms ease;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { width: 100%; height: 100%; display: flex; flex-direction: column; }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Focus visible para acessibilidade por teclado */
+:focus-visible {
+  outline: 2px solid var(--mint-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Respeitar preferência por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Utilitários */
+.font-mono { font-family: var(--font-mono); }
+
+/* Badges de tipo de arquivo */
+.badge-pill {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.badge-entry     { background: rgba(231,189,114,0.15); color: var(--color-warning); border: 1px solid rgba(231,189,114,0.3); }
+.badge-component { background: rgba(99,214,165,0.12);  color: var(--mint-primary);  border: 1px solid rgba(99,214,165,0.3); }
+.badge-hook      { background: rgba(129,187,248,0.12); color: #81BBF8;              border: 1px solid rgba(129,187,248,0.3); }
+.badge-util      { background: rgba(180,170,240,0.12); color: #B4AAF0;              border: 1px solid rgba(180,170,240,0.3); }
+.badge-style     { background: rgba(240,128,128,0.10); color: var(--color-error);   border: 1px solid rgba(240,128,128,0.25); }
+
+/* React Flow overrides */
+.react-flow__attribution { display: none !important; }
+
+.react-flow__controls {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+}
+
+.react-flow__controls-button {
+  background-color: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  fill: var(--text-secondary) !important;
+}
+
+.react-flow__controls-button:hover {
+  background-color: var(--bg-surface-hover) !important;
+  fill: var(--mint-primary) !important;
+}
+
+.react-flow__controls-button svg { fill: inherit !important; }
+
+.react-flow__minimap {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+}
