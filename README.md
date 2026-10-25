@@ -2,16 +2,15 @@
 
 Visualizador interativo de grafos de dependências para projetos JavaScript e TypeScript.
 
+🔗 **Acesse online:** [https://thiagoibrahimvieira.github.io/CodeAtlas/](https://thiagoibrahimvieira.github.io/CodeAtlas/)
+
 ---
 
 ## 📌 Sobre o Projeto
 
 O **CodeAtlas** é uma aplicação web focada em visualização de arquitetura de software. Ele mapeia e apresenta graficamente os arquivos, módulos e relações de dependência de uma base de código, tornando transparente a compreensão da estrutura interna, acoplamentos, módulos isolados e importações não resolvidas.
 
-Este projeto foi concebido como uma iniciativa de portfólio e aprofundamento técnico em engenharia de software frontend, explorando renderização interativa de grafos, acessibilidade, design systems com CSS nativo e análise estática de código.
-
-> **Transparência sobre o estado atual:**  
-> A versão atual contempla a **interface visual e interativa completa** (layout de 3 colunas, grafo interativo, navegação sincronizada e painéis de métricas) operando sobre um **conjunto de dados de teste (mock realista)**. O analisador estático real — que fará a leitura de diretórios locais e o parsing dos arquivos via AST/regex — está planejado para as próximas etapas no [Roadmap](#-roadmap).
+O processamento é **100% client-side** diretamente no navegador: o código-fonte analisado nunca é transmitido a nenhum servidor externo, garantindo total privacidade e segurança.
 
 ---
 
@@ -115,27 +114,39 @@ CodeAtlas/
 
 ---
 
-## 🗺️ Roadmap
+## 🗺️ Roadmap do Projeto
 
 - [x] **Fase 1: Interface e Grafo Interativo**
   - [x] Design System com paleta grafite/verde menta em Vanilla CSS
-  - [x] Layout de três colunas (navegação, grafo central e métricas)
+  - [x] Layout de três colunas (árvore de arquivos, grafo central e métricas)
   - [x] Grafo interativo com nós customizados e destaque de dependências
-  - [x] Árvore de arquivos com busca e filtros
-  - [x] Dados simulados realistas com diagnósticos de importações
-- [ ] **Fase 2: Analisador Estático JS/TS (Em breve)**
-  - [ ] Parser de imports estáticos (`import ... from '...'`) e dinâmicos (`import(...)`)
-  - [ ] Resolução de caminhos relativos e aliases configurados no `tsconfig.json`
-  - [ ] Geração dinâmica do grafo a partir do código-fonte
-- [ ] **Fase 3: Leitura de Projetos Locais**
-  - [ ] Suporte à *File System Access API* para carregar diretórios do computador
-  - [ ] Processamento client-side seguro (sem envio de código para servidores externos)
-- [ ] **Fase 4: Análise Avançada de Arquitetura**
-  - [ ] Detecção automática de ciclos de dependência (dependências circulares)
-  - [ ] Identificação de arquivos órfãos (código morto / não importado)
-  - [ ] Métricas de acoplamento aferente e eferente
-- [ ] **Fase 5: Integração com Repositórios Remotos**
-  - [ ] Carregamento direto de repositórios públicos do GitHub
+  - [x] Árvore de arquivos com busca em tempo real e filtros por tipo
+- [x] **Fase 2: Analisador Estático JS/TS**
+  - [x] Extração de imports e exports via TypeScript Compiler API (AST)
+  - [x] Resolução de caminhos relativos e arquivos index
+  - [x] Construção determinística de nós e arestas direcionadas
+- [x] **Fase 3: Leitura de Projetos Locais**
+  - [x] Carregamento de pastas locais diretamente pelo navegador
+  - [x] Filtragem de pastas ignoradas (`node_modules`, `.git`, `dist`, etc.)
+  - [x] Processamento 100% client-side sem tráfego de código para servidores
+- [x] **Fase 4: Resolução de Aliases e Tipos de Arquivos**
+  - [x] Suporte a aliases de caminho configurados no `tsconfig.json` ou `jsconfig.json`
+  - [x] Resolução de módulos e arquivos JSON
+  - [x] Classificação de dependências externas, não resolvidas e geradas/ignoradas
+- [x] **Fase 7: Auditoria Técnica, Testes e Qualidade**
+  - [x] 54 testes automatizados em 5 suítes com Vitest
+  - [x] Linting rigoroso sem erros ou avisos com Oxlint
+  - [x] Dynamic import para code-splitting da Compiler API
+- [x] **Fase 8: Polimento, Responsividade e Acessibilidade**
+  - [x] Conformidade de contraste WCAG 2.2 AA (`--text-muted: #829288`)
+  - [x] Semântica HTML (`<h2>`, `<h3>`), papéis ARIA (`role="treeitem"`, `aria-selected`)
+  - [x] Layout responsivo para Desktop, Tablet e Mobile com gavetas e backdrop
+- [x] **Fase 9: Publicação da Versão Web**
+  - [x] Pipeline de CI/CD automatizado via GitHub Actions
+  - [x] Deploy contínuo no GitHub Pages com subcaminho base configurável
+  - [x] Compatibilidade com Vercel e suporte a headers de segurança
+- [ ] **Fase 10: Documentação, Apresentação e Portfólio (Próxima etapa)**
+- [ ] **Futuro: Análise Avançada de Arquitetura & Integração Git Remota**
 
 ---
 
