@@ -239,7 +239,10 @@ export function resolveModuleSpecifier(
             suffix ? trimmed.length - suffix.length : undefined
           );
 
-          for (const target of targets) {
+          const targetList = Array.isArray(targets) ? targets : [targets];
+          for (const rawTarget of targetList) {
+            if (typeof rawTarget !== 'string') continue;
+            const target = rawTarget.replace(/^\/+/, '');
             const mappedTarget = target.replace('*', wildcard);
             const combined = options.baseUrl
               ? `${options.baseUrl}/${mappedTarget}`
@@ -273,7 +276,10 @@ export function resolveModuleSpecifier(
         }
       } else if (pattern === trimmed) {
         // Exact alias match
-        for (const target of targets) {
+        const targetList = Array.isArray(targets) ? targets : [targets];
+        for (const rawTarget of targetList) {
+          if (typeof rawTarget !== 'string') continue;
+          const target = rawTarget.replace(/^\/+/, '');
           const combined = options.baseUrl ? `${options.baseUrl}/${target}` : target;
           const normalized = normalizeVirtualPath(combined).path;
           const match = findCandidateMatch(normalized, fileSet);

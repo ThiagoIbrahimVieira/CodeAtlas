@@ -135,6 +135,32 @@ describe('resolveDependencies', () => {
       expect(res.resolvedPath).toBe('src/utils/helpers.ts');
     });
 
+    it('tolerates paths where target is configured as a single string instead of array or has leading slash', () => {
+      const optionsWithStringTarget: PathResolutionOptions = {
+        ...defaultOptions,
+        paths: {
+          '@/*': 'src/*' as unknown as string[],
+          '@button': '/src/components/common/Button.tsx' as unknown as string[],
+        },
+      };
+
+      const resWildcard = resolveModuleSpecifier(
+        '@/components/Header',
+        'src/App.tsx',
+        optionsWithStringTarget
+      );
+      expect(resWildcard.type).toBe('internal');
+      expect(resWildcard.resolvedPath).toBe('src/components/Header.tsx');
+
+      const resExact = resolveModuleSpecifier(
+        '@button',
+        'src/App.tsx',
+        optionsWithStringTarget
+      );
+      expect(resExact.type).toBe('internal');
+      expect(resExact.resolvedPath).toBe('src/components/common/Button.tsx');
+    });
+
     it('resolves aliases pointing to another folder outside src (e.g. shared/* or lib/*)', () => {
       const optionsOtherFolder: PathResolutionOptions = {
         workspaceFiles: [
