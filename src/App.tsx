@@ -17,8 +17,8 @@ export default function App() {
   const [dataset, setDataset]                       = useState<DatasetMode>('mock');
   const [selectedId, setSelectedId]                 = useState<string | null>(null);
   const [searchQuery, setSearchQuery]               = useState('');
-  const [sidebarOpen, setSidebarOpen]               = useState(true);
-  const [detailsOpen, setDetailsOpen]               = useState(true);
+  const [sidebarOpen, setSidebarOpen]               = useState(() => typeof window !== 'undefined' ? window.innerWidth > 768 : true);
+  const [detailsOpen, setDetailsOpen]               = useState(() => typeof window !== 'undefined' ? window.innerWidth > 1024 : true);
 
   // Dynamic projects state
   const [analyzedProjectState, setAnalyzedProject]  = useState<AtlasProject | null>(null);
@@ -39,7 +39,10 @@ export default function App() {
 
   const handleSelectFile = useCallback((id: string) => {
     setSelectedId(id);
-    if (window.innerWidth <= 768) setDetailsOpen(true);
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      setDetailsOpen(true);
+      setSidebarOpen(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -193,9 +196,25 @@ export default function App() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             isSidebarOpen={sidebarOpen}
-            onToggleSidebar={() => setSidebarOpen(p => !p)}
+            onToggleSidebar={() => {
+              setSidebarOpen(prev => {
+                const next = !prev;
+                if (next && typeof window !== 'undefined' && window.innerWidth <= 768) {
+                  setDetailsOpen(false);
+                }
+                return next;
+              });
+            }}
             isDetailsOpen={detailsOpen}
-            onToggleDetails={() => setDetailsOpen(p => !p)}
+            onToggleDetails={() => {
+              setDetailsOpen(prev => {
+                const next = !prev;
+                if (next && typeof window !== 'undefined' && window.innerWidth <= 768) {
+                  setSidebarOpen(false);
+                }
+                return next;
+              });
+            }}
             onFitView={handleFitView}
             onClearSelection={handleClearSelection}
             hasSelection={selectedId !== null}
@@ -241,6 +260,20 @@ export default function App() {
                 onClose={() => setDetailsOpen(false)}
               />
             </aside>
+
+            {/* Mobile panel backdrop */}
+            {(sidebarOpen || detailsOpen) && (
+              <div
+                className="atlas-panel-backdrop"
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+                    setSidebarOpen(false);
+                    setDetailsOpen(false);
+                  }
+                }}
+                aria-hidden="true"
+              />
+            )}
           </main>
         </div>
       )}

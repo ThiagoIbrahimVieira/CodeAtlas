@@ -42,7 +42,7 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
       <div className="panel-header">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3, overflow: 'hidden' }}>
           <span className={`badge-pill badge-${file.type}`}>{file.type}</span>
-          <span className="details-file-name font-mono">{file.name}</span>
+          <h2 className="details-file-name font-mono">{file.name}</h2>
           <span className="details-file-path font-mono">{file.path}</span>
         </div>
         <button
@@ -83,9 +83,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
         {/* Diagnósticos / Avisos Reais */}
         {unresolved.length > 0 && (
           <div className="details-section">
-            <span className="section-heading warn" role="heading" aria-level={3}>
+            <h3 className="section-heading warn">
               Avisos ({unresolved.length})
-            </span>
+            </h3>
             {unresolved.map(imp => (
               <div key={imp.specifier} className="diag-block">
                 <span className="diag-spec">{imp.specifier}</span>
@@ -98,9 +98,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
         {/* Referências a artefatos gerados ou ignorados intencionalmente */}
         {ignored.length > 0 && (
           <div className="details-section">
-            <span className="section-heading" role="heading" aria-level={3} style={{ color: 'var(--text-secondary)' }}>
+            <h3 className="section-heading" style={{ color: 'var(--text-secondary)' }}>
               Gerados / Ignorados ({ignored.length})
-            </span>
+            </h3>
             {ignored.map(imp => (
               <div key={imp.specifier} className="diag-block ignored">
                 <span className="diag-spec font-mono">{imp.specifier}</span>
@@ -112,9 +112,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
 
         {/* Dependências internas */}
         <div className="details-section">
-          <span className="section-heading" role="heading" aria-level={3}>
+          <h3 className="section-heading">
             Importa ({internal.length})
-          </span>
+          </h3>
           {internal.length === 0
             ? <span className="empty-desc">Nenhuma dependência interna</span>
             : (
@@ -141,9 +141,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
 
         {/* Usado por */}
         <div className="details-section">
-          <span className="section-heading" role="heading" aria-level={3}>
+          <h3 className="section-heading">
             Usado por ({dependents.length})
-          </span>
+          </h3>
           {dependents.length === 0
             ? <span className="empty-desc">Nenhum arquivo depende diretamente deste</span>
             : (
@@ -171,9 +171,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
         {/* Externos */}
         {external.length > 0 && (
           <div className="details-section">
-            <span className="section-heading" role="heading" aria-level={3}>
+            <h3 className="section-heading">
               Pacotes externos ({external.length})
-            </span>
+            </h3>
             <div className="tag-row">
               {external.map(e => (
                 <span key={e.specifier} className="tag-external">{e.specifier}</span>
@@ -185,9 +185,9 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
         {/* Exportações */}
         {file.exports.length > 0 && (
           <div className="details-section">
-            <span className="section-heading" role="heading" aria-level={3}>
+            <h3 className="section-heading">
               Exportações ({file.exports.length})
-            </span>
+            </h3>
             <div className="tag-row">
               {file.exports.map(exp => (
                 <span key={exp} className="tag-export">{exp}</span>

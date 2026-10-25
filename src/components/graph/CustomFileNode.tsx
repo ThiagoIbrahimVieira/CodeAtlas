@@ -22,7 +22,12 @@ export const CustomFileNode = memo(({ data }: { data: CustomFileNodeData }) => {
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={cls} role="button" aria-label={`Arquivo ${file.name}`} aria-pressed={isSelected}>
+    <div
+      className={cls}
+      role="button"
+      aria-label={`Arquivo ${file.name}, tipo ${file.type}${hasDiagnostics ? ', com aviso de importação' : ''}`}
+      aria-pressed={isSelected}
+    >
       <Handle type="target" position={Position.Top}    className="atlas-handle" aria-hidden="true" />
 
       <div className="atlas-node-header">

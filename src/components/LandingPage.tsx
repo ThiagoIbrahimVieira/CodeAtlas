@@ -123,7 +123,6 @@ export function LandingPage({ onOpenDemo, onOpenLocalProject }: LandingPageProps
             className="btn-secondary"
             onClick={onOpenLocalProject}
             title="Selecionar pasta de um projeto local para análise"
-            style={{ cursor: 'pointer', opacity: 1 }}
           >
             Abrir pasta local
           </button>

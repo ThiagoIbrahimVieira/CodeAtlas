@@ -157,7 +157,7 @@ export function HeaderBar({
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 0 10.12 4.5H13A1.5 1.5 0 0 1 14.5 6v6.5a1.5 1.5 0 0 1-1.5 1.5H3a1.5 1.5 0 0 1-1.5-1.5V3.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
           </svg>
-          {isAnalyzing ? 'Analisando…' : 'Abrir pasta'}
+          <span className="btn-label">{isAnalyzing ? 'Analisando…' : 'Abrir pasta'}</span>
         </button>
 
         <button
@@ -183,7 +183,7 @@ export function HeaderBar({
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
               <path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
             </svg>
-            Limpar seleção
+            <span className="btn-label">Limpar seleção</span>
           </button>
         )}
 
@@ -200,7 +200,7 @@ export function HeaderBar({
             <rect x="0.5" y="0.5" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.1"/>
             <line x1="7" y1="0.5" x2="7" y2="10.5" stroke="currentColor" strokeWidth="1.1"/>
           </svg>
-          Detalhes
+          <span className="btn-label">Detalhes</span>
         </button>
       </div>
     </header>

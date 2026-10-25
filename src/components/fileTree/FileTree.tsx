@@ -81,7 +81,8 @@ function FolderNode({
             className={`tree-item ${isActive ? 'active' : ''}`}
             style={indent}
             onClick={() => onSelectFile(file.id)}
-            aria-current={isActive ? 'true' : undefined}
+            role="treeitem"
+            aria-selected={isActive}
             aria-label={`${file.name}${hasWarn ? ' — contém aviso de importação' : ''}`}
           >
             <span className="tree-item-name">{file.name}</span>
