@@ -11,6 +11,11 @@ interface HeaderBarProps {
   onFitView: () => void;
   onClearSelection: () => void;
   hasSelection: boolean;
+  dataset: 'mock' | 'analyzed' | 'local';
+  onDatasetChange: (ds: 'mock' | 'analyzed' | 'local') => void;
+  hasLocalProject: boolean;
+  onOpenLocalProject: () => void;
+  isAnalyzing?: boolean;
 }
 
 export function HeaderBar({
@@ -26,6 +31,11 @@ export function HeaderBar({
   onFitView,
   onClearSelection,
   hasSelection,
+  dataset,
+  onDatasetChange,
+  hasLocalProject,
+  onOpenLocalProject,
+  isAnalyzing = false,
 }: HeaderBarProps) {
   return (
     <header className="header-bar" role="banner">
@@ -56,7 +66,39 @@ export function HeaderBar({
             <line x1="8" y1="5.5" x2="12.2" y2="10" stroke="var(--text-muted)" strokeWidth="1.1"/>
           </svg>
           <span className="brand-title">CodeAtlas</span>
-          <span className="brand-badge" aria-label="modo demonstração">DEMO</span>
+        </div>
+
+        {/* Seletor de Dataset (Mock Padrão vs Analisado Real vs Local Carregado) */}
+        <div className="dataset-switcher" role="group" aria-label="Fonte do grafo">
+          <button
+            type="button"
+            className={`dataset-btn ${dataset === 'mock' ? 'active' : ''}`}
+            onClick={() => onDatasetChange('mock')}
+            title="Projeto simulado (13 arquivos)"
+            aria-pressed={dataset === 'mock'}
+          >
+            Mock (13)
+          </button>
+          <button
+            type="button"
+            className={`dataset-btn ${dataset === 'analyzed' ? 'active' : ''}`}
+            onClick={() => onDatasetChange('analyzed')}
+            title="Projeto demonstrativo analisado (8 arquivos)"
+            aria-pressed={dataset === 'analyzed'}
+          >
+            Analisado (8)
+          </button>
+          {hasLocalProject && (
+            <button
+              type="button"
+              className={`dataset-btn ${dataset === 'local' ? 'active' : ''}`}
+              onClick={() => onDatasetChange('local')}
+              title="Projeto local carregado"
+              aria-pressed={dataset === 'local'}
+            >
+              Local ({filesCount})
+            </button>
+          )}
         </div>
 
         {/* Estatísticas */}
@@ -79,6 +121,8 @@ export function HeaderBar({
             </svg>
           </span>
           <input
+            id="project-search-input"
+            name="search"
             type="search"
             className="search-input"
             placeholder="Buscar arquivo…"
@@ -101,6 +145,21 @@ export function HeaderBar({
 
       {/* Ações do grafo */}
       <div className="header-right">
+        {/* Botão Abrir Pasta */}
+        <button
+          type="button"
+          className="btn-text"
+          onClick={onOpenLocalProject}
+          disabled={isAnalyzing}
+          aria-label="Abrir pasta local de projeto"
+          title="Selecionar pasta do projeto no computador"
+        >
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 0 10.12 4.5H13A1.5 1.5 0 0 1 14.5 6v6.5a1.5 1.5 0 0 1-1.5 1.5H3a1.5 1.5 0 0 1-1.5-1.5V3.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+          </svg>
+          {isAnalyzing ? 'Analisando…' : 'Abrir pasta'}
+        </button>
+
         <button
           type="button"
           className="icon-btn"

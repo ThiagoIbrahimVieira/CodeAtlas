@@ -1,12 +1,17 @@
 export type FileType = 'entry' | 'component' | 'hook' | 'util' | 'style';
 
-export type ImportType = 'internal' | 'external' | 'unresolved';
+export type ImportType = 'internal' | 'external' | 'unresolved' | 'ignored';
 
 export interface FileImport {
   specifier: string;          // ex: './Button', 'react', './MissingParser'
   resolvedPath?: string;      // ex: 'src/components/common/Button.tsx' (quando internal e resolvido)
   type: ImportType;
   diagnosticNote?: string;    // ex: "Módulo não localizado no workspace"
+  sourceLine?: number;
+  symbols?: string[];
+  isTypeOnly?: boolean;
+  isReexport?: boolean;
+  isDynamic?: boolean;
 }
 
 export interface AtlasFile {
@@ -18,6 +23,7 @@ export interface AtlasFile {
   linesCount: number;
   imports: FileImport[];
   exports: string[];
+  dynamicImports?: FileImport[];
 }
 
 export interface AtlasEdge {

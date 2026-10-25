@@ -34,6 +34,7 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
   const internal   = file.imports.filter(i => i.type === 'internal');
   const external   = file.imports.filter(i => i.type === 'external');
   const unresolved = file.imports.filter(i => i.type === 'unresolved');
+  const ignored    = file.imports.filter(i => i.type === 'ignored');
 
   return (
     <div role="region" aria-label={`Detalhes do arquivo ${file.name}`} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -79,7 +80,7 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
           </div>
         </div>
 
-        {/* Diagnósticos */}
+        {/* Diagnósticos / Avisos Reais */}
         {unresolved.length > 0 && (
           <div className="details-section">
             <span className="section-heading warn" role="heading" aria-level={3}>
@@ -88,6 +89,21 @@ export function NodeDetails({ project, selectedFileId, onSelectFile, onClose }: 
             {unresolved.map(imp => (
               <div key={imp.specifier} className="diag-block">
                 <span className="diag-spec">{imp.specifier}</span>
+                <span className="diag-note">{imp.diagnosticNote}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Referências a artefatos gerados ou ignorados intencionalmente */}
+        {ignored.length > 0 && (
+          <div className="details-section">
+            <span className="section-heading" role="heading" aria-level={3} style={{ color: 'var(--text-secondary)' }}>
+              Gerados / Ignorados ({ignored.length})
+            </span>
+            {ignored.map(imp => (
+              <div key={imp.specifier} className="diag-block ignored">
+                <span className="diag-spec font-mono">{imp.specifier}</span>
                 <span className="diag-note">{imp.diagnosticNote}</span>
               </div>
             ))}

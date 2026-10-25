@@ -28,8 +28,9 @@ interface DependencyGraphProps {
   onSelectFile: (fileId: string) => void;
 }
 
-// Posições hierárquicas pré-calculadas para o mock (col × row)
+// Posições pré-calculadas para o mock e o projeto analisado (col × row)
 const POSITIONS: Record<string, { x: number; y: number }> = {
+  // Mock Demo Project
   'src/main.tsx':                         { x: 380, y:  20 },
   'src/index.css':                        { x: 640, y: 120 },
   'src/App.tsx':                          { x: 380, y: 140 },
@@ -43,7 +44,29 @@ const POSITIONS: Record<string, { x: number; y: number }> = {
   'src/utils/formatters.ts':              { x: 580, y: 420 },
   'src/services/authService.ts':          { x:  20, y: 560 },
   'src/utils/storage.ts':                 { x: 360, y: 560 },
+
+  // Analyzed Demo Project
+  'src/index.ts':                         { x: 380, y:  30 },
+  'src/config.ts':                        { x: 650, y: 160 },
+  'src/services/userService.ts':          { x: 140, y: 160 },
+  'src/components/Dashboard.tsx':         { x: 650, y: 300 },
+  'src/utils/logger.ts':                 { x:  60, y: 440 },
+  'src/utils/crypto.ts':                 { x: 360, y: 440 },
+  'src/standaloneHelper.ts':             { x: 650, y:  30 },
 };
+
+/**
+ * Deterministic collision-free grid layout fallback for nodes not in POSITIONS dictionary.
+ */
+function calculateFallbackGridPosition(index: number, total: number): { x: number; y: number } {
+  const cols = Math.max(2, Math.min(4, Math.ceil(Math.sqrt(total))));
+  const col = index % cols;
+  const row = Math.floor(index / cols);
+  return {
+    x: 80 + col * 270,
+    y: 50 + row * 160,
+  };
+}
 
 const NODE_TYPES = { customFileNode: CustomFileNode };
 
@@ -72,14 +95,14 @@ function FlowInner({
     return s;
   }, [selectedFileId, project.edges]);
 
-  const rfNodes: Node[] = useMemo(() => project.files.map(file => {
+  const rfNodes: Node[] = useMemo(() => project.files.map((file, index) => {
     const isSelected    = file.id === selectedFileId;
     const isHighlighted = connected.has(file.id) && !isSelected;
     const isDimmed      = selectedFileId !== null && !connected.has(file.id);
     return {
       id: file.id,
       type: 'customFileNode',
-      position: POSITIONS[file.id] ?? { x: 300, y: 300 },
+      position: POSITIONS[file.id] ?? calculateFallbackGridPosition(index, project.files.length),
       data: {
         file,
         isSelected,

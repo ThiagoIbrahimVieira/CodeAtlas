@@ -1,5 +1,6 @@
 interface LandingPageProps {
   onOpenDemo: () => void;
+  onOpenLocalProject: () => void;
 }
 
 // Mini-grafo SVG estático que serve de preview visual na landing
@@ -82,7 +83,7 @@ function GraphPreview() {
   );
 }
 
-export function LandingPage({ onOpenDemo }: LandingPageProps) {
+export function LandingPage({ onOpenDemo, onOpenLocalProject }: LandingPageProps) {
   return (
     <main className="landing-root">
       <div className="landing-content">
@@ -120,11 +121,11 @@ export function LandingPage({ onOpenDemo }: LandingPageProps) {
           <button
             type="button"
             className="btn-secondary"
-            disabled
-            title="Em desenvolvimento — disponível em breve"
+            onClick={onOpenLocalProject}
+            title="Selecionar pasta de um projeto local para análise"
+            style={{ cursor: 'pointer', opacity: 1 }}
           >
-            Abrir projeto
-            <span className="btn-badge">Em breve</span>
+            Abrir pasta local
           </button>
         </div>
 
